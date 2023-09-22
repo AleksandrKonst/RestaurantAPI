@@ -8,14 +8,16 @@ public interface IRestaurantStorage
     public int CountDishes();
     public int CountClients();
     public int CountOrderItems();
-    public IEnumerable<OrderItem> ListOrderItems();
+    public IEnumerable<OrderItem?> ListOrderItems();
     public IEnumerable<Order?> ListOrders();
     public IEnumerable<Client?> ListClients();
     public IEnumerable<Dish?> ListDishes();
 
-    public IEnumerable<OrderItem> FindOrderItems(string code);
-    public IEnumerable<OrderItem> FindOrderItemsByDish(string code);
+    public OrderItem? FindOrderItems(string orderId, string dishId);
+    public IEnumerable<OrderItem?> FindOrderItemsByOrder(string code);
+    public IEnumerable<OrderItem?> FindOrderItemsByDish(string code);
     public Order? FindOrder(string code);
+    public IEnumerable<Order> FindOrderByClient(string code);
     public Client? FindClient(string code);
     public Dish? FindDish(string code);
     

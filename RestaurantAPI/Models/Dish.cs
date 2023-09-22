@@ -10,5 +10,5 @@ public class Dish
     public string Detaills { get; set; }
 
     [JsonIgnore]
-    public ICollection<OrderItem> OrderItems { get; set; }
+    public ICollection<OrderItem?> OrderItems { get; set; }
 }

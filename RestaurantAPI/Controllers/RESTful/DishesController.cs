@@ -100,7 +100,7 @@ public class DishesController : ControllerBase
             Detaills = dto.Detaills,
             OrderItems = orderItems.ToList()
         };
-        _db.UpdateDish(dish);
+        _db.CreateDish(dish);
         return Created($"/api/dishes/{dish.Code}", dish.DishToResource());
     }
     

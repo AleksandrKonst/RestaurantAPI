@@ -10,5 +10,5 @@ public class Order
     public Client? Client{ get; set; }
     public string Address { get; set; }
     [JsonIgnore]
-    public ICollection<OrderItem> OrderItems { get; set; }
+    public ICollection<OrderItem?> OrderItems { get; set; }
 }

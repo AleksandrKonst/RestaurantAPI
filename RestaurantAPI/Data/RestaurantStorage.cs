@@ -9,7 +9,7 @@ public class RestaurantStorage : IRestaurantStorage
     private readonly Dictionary<string, Dish?> dishes = new Dictionary<string, Dish?>(collation);
     private readonly Dictionary<string, Client?> clients = new Dictionary<string, Client?>(collation);
     private readonly Dictionary<string, Order?> orders = new Dictionary<string, Order?>(collation);
-    private readonly List<OrderItem> orderItems = new List<OrderItem>();
+    private readonly List<OrderItem?> orderItems = new List<OrderItem?>();
     private readonly ILogger<RestaurantStorage> logger;
     
     
@@ -113,7 +113,7 @@ public class RestaurantStorage : IRestaurantStorage
     
     public int CountOrderItems() => orderItems.Count;
 
-    public IEnumerable<OrderItem> ListOrderItems() => orderItems;
+    public IEnumerable<OrderItem?> ListOrderItems() => orderItems;
 
     public IEnumerable<Order?> ListOrders() => orders.Values;
 
@@ -121,11 +121,15 @@ public class RestaurantStorage : IRestaurantStorage
 
     public IEnumerable<Dish?> ListDishes() => dishes.Values;
 
-    public IEnumerable<OrderItem> FindOrderItems(string code) => orderItems.Where(order => order.OrderCode == code);
+    public OrderItem? FindOrderItems(string orderId, string dishId) => orderItems.Where(order => order.OrderCode == orderId && order.DishCode == dishId ).FirstOrDefault();
     
-    public IEnumerable<OrderItem> FindOrderItemsByDish(string code) => orderItems.Where(order => order.DishCode == code);
+    public IEnumerable<OrderItem?> FindOrderItemsByOrder(string code) => orderItems.Where(order => order.OrderCode == code);
+    
+    public IEnumerable<OrderItem?> FindOrderItemsByDish(string code) => orderItems.Where(order => order.DishCode == code);
 
     public Order? FindOrder(string code) => orders.GetValueOrDefault(code);
+    
+    public IEnumerable<Order> FindOrderByClient(string code) => orders.Values.Where(order => order.ClientCode == code);
 
     public Client? FindClient(string code) => clients.GetValueOrDefault(code);
 
@@ -168,31 +172,44 @@ public class RestaurantStorage : IRestaurantStorage
 
     public void CreateClient(Client client)
     {
-        throw new NotImplementedException();
+        UpdateClient(client);
     }
 
     public void UpdateClient(Client client)
     {
-        throw new NotImplementedException();
+        clients[client.Code] = client;
     }
 
     public void DeleteClient(Client client)
     {
-        throw new NotImplementedException();
+        var order = FindOrder(client.Code);
+        if (order != null)
+        {
+            orders.Remove(order.Code);
+            orderItems.RemoveAll(item => item.OrderCode == order.Code);
+        }
+        clients.Remove(client.Code);
     }
 
     public void CreateOrderItem(OrderItem orderItem)
     {
-        throw new NotImplementedException();
+        orderItem.Order.OrderItems.Add(orderItem);
+        orderItem.OrderCode = orderItem.Order.Code;
+        
+        orderItem.Dish.OrderItems.Add(orderItem);
+        orderItem.DishCode = orderItem.Dish.Code;
+        
+        orderItems.Add(orderItem);
     }
 
     public void UpdateOrderItem(OrderItem orderItem)
     {
-        throw new NotImplementedException();
+        var order = orderItems.FirstOrDefault(order => order.OrderCode == orderItem.OrderCode && order.DishCode == orderItem.DishCode);
+        order.Quantity = orderItem.Quantity;
     }
 
     public void DeleteOrderItem(OrderItem orderItem)
     {
-        throw new NotImplementedException();
+        orderItems.Remove(orderItem);
     }
 }

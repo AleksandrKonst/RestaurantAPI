@@ -30,7 +30,7 @@ public static class Hal
                         href = $"/api/clients/{order.ClientCode}"
                     },
                     orderItems = new {
-                        href = $"/api/order-items/?orderCode={order.Code}"
+                        href = $"/api/order-items/order/{order.Code}"
                     }
                 };
                 return resource;
@@ -43,39 +43,36 @@ public static class Hal
                     href = $"/api/dishes/{dish.Code}"
                 },
                 orderItems = new {
-                    href = $"/api/order-items?dishCode={dish.Code}"
+                    href = $"/api/order-items/dish/{dish.Code}"
                 }
             };
             return resource;
         }
         
-        public static dynamic OrderItemsToResource(this Order order) {
-            var resource = order.ToDynamic();
+        public static dynamic OrderItemsToResource(this OrderItem orderItem) {
+            var resource = orderItem.ToDynamic();
             resource._links = new {
                 self = new {
-                    href = $"/api/orders/{order.Code}"
+                    href = $"/api/order-items/{orderItem.OrderCode}/{orderItem.DishCode}"
                 },
-                client = new {
-                    href = $"/api/clients/{order.ClientCode}"
+                order = new {
+                    href = $"/api/orders/{orderItem.OrderCode}"
                 },
-                orderItems = new {
-                    href = $"/api/order-items/{order.Code}"
+                dish = new {
+                    href = $"/api/dishes/{orderItem.DishCode}"
                 }
             };
             return resource;
         }
         
-        public static dynamic ClientToResource(this Order order) {
-            var resource = order.ToDynamic();
+        public static dynamic ClientToResource(this Client client) {
+            var resource = client.ToDynamic();
             resource._links = new {
                 self = new {
-                    href = $"/api/orders/{order.Code}"
+                    href = $"/api/clients/{client.Code}"
                 },
-                client = new {
-                    href = $"/api/clients/{order.ClientCode}"
-                },
-                orderItems = new {
-                    href = $"/api/order-items/{order.Code}"
+                order = new {
+                    href = $"/api/orders/client/{client.Code}"
                 }
             };
             return resource;

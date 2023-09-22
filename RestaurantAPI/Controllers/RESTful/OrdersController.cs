@@ -73,7 +73,7 @@ public class OrdersController : ControllerBase
     public IActionResult Put(string id, [FromBody] OrderDTO dto)
     {
         var client = _db.FindClient(dto.ClientCode);
-        var orderItems = _db.FindOrderItems(dto.Code);
+        var orderItems = _db.FindOrderItemsByOrder(dto.Code);
         var order = new Order
         {
             Code = dto.Code,
@@ -93,7 +93,7 @@ public class OrdersController : ControllerBase
         if (existing != default)
             return Conflict($"Sorry, there is already a order with this code {dto.Code} in the database.");
         var client = _db.FindClient(dto.ClientCode);
-        var orderItems = _db.FindOrderItems(dto.Code);
+        var orderItems = _db.FindOrderItemsByOrder(dto.Code);
         var order = new Order
         {
             Code = dto.Code,
@@ -113,5 +113,24 @@ public class OrdersController : ControllerBase
         if (order == default) return NotFound();
         _db.DeleteOrder(order);
         return NoContent();
+    }
+    
+    [HttpGet("client/{clientId}")]
+    [Produces("application/hal+json")]
+    public IActionResult GetClient(string clientId, int index = 0, int count = PAGE_SIZE)
+    {
+        var items = _db.ListOrders().Where(order => order.ClientCode == clientId).Skip(index).Take(count)
+            .Select(v => v.OrderToResource());
+        var total = items.Count();
+        var _links = Hal.PaginateAsDynamic("/api/orders", index, count, total);
+        var result = new
+        {
+            _links,
+            count,
+            total,
+            index,
+            items
+        };
+        return Ok(result);
     }
 }
