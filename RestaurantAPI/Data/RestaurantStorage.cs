@@ -106,6 +106,12 @@ public class RestaurantStorage : IRestaurantStorage
     }
 
     public int CountOrders() => orders.Count;
+    
+    public int CountDishes() => dishes.Count;
+    
+    public int CountClients() => clients.Count;
+    
+    public int CountOrderItems() => orderItems.Count;
 
     public IEnumerable<OrderItem> ListOrderItems() => orderItems;
 
@@ -116,6 +122,8 @@ public class RestaurantStorage : IRestaurantStorage
     public IEnumerable<Dish?> ListDishes() => dishes.Values;
 
     public IEnumerable<OrderItem> FindOrderItems(string code) => orderItems.Where(order => order.OrderCode == code);
+    
+    public IEnumerable<OrderItem> FindOrderItemsByDish(string code) => orderItems.Where(order => order.DishCode == code);
 
     public Order? FindOrder(string code) => orders.GetValueOrDefault(code);
 
@@ -140,5 +148,51 @@ public class RestaurantStorage : IRestaurantStorage
         var model = FindClient(order.ClientCode);
         model.Orders.Remove(order);
         orders.Remove(order.Code);
+    }
+
+    public void CreateDish(Dish dish)
+    {
+        UpdateDish(dish);
+    }
+
+    public void UpdateDish(Dish dish)
+    {
+        dishes[dish.Code] = dish;
+    }
+
+    public void DeleteDish(Dish dish)
+    {
+        orderItems.RemoveAll(item => item.DishCode == dish.Code);
+        dishes.Remove(dish.Code);
+    }
+
+    public void CreateClient(Client client)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void UpdateClient(Client client)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void DeleteClient(Client client)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void CreateOrderItem(OrderItem orderItem)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void UpdateOrderItem(OrderItem orderItem)
+    {
+        throw new NotImplementedException();
+    }
+
+    public void DeleteOrderItem(OrderItem orderItem)
+    {
+        throw new NotImplementedException();
     }
 }

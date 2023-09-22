@@ -24,7 +24,7 @@ public class OrdersController : ControllerBase
     public IActionResult Get(int index = 0, int count = PAGE_SIZE)
     {
         var items = _db.ListOrders().Skip(index).Take(count)
-            .Select(v => v.ToResource());
+            .Select(v => v.OrderToResource());
         var total = _db.CountOrders();
         var _links = Hal.PaginateAsDynamic("/api/orders", index, count, total);
         var result = new
@@ -44,7 +44,7 @@ public class OrdersController : ControllerBase
     {
         var order = _db.FindOrder(id);
         if (order == default) return NotFound();
-        var resource = order.ToResource();
+        var resource = order.OrderToResource();
         resource._actions = new
         {
             delete = new
@@ -103,7 +103,7 @@ public class OrdersController : ControllerBase
             OrderItems = orderItems.ToList()
         };
         _db.CreateOrder(order);
-        return Created($"/api/vehicles/{order.Code}", order.ToResource());
+        return Created($"/api/orders/{order.Code}", order.OrderToResource());
     }
     
     [HttpDelete("{id}")]

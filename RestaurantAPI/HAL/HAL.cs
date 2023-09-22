@@ -20,7 +20,7 @@ public static class Hal
                 return links;
         }
 
-        public static dynamic ToResource(this Order order) {
+        public static dynamic OrderToResource(this Order order) {
                 var resource = order.ToDynamic();
                 resource._links = new {
                     self = new {
@@ -30,10 +30,55 @@ public static class Hal
                         href = $"/api/clients/{order.ClientCode}"
                     },
                     orderItems = new {
-                        href = $"/api/order-items/{order.Code}"
+                        href = $"/api/order-items/?orderCode={order.Code}"
                     }
                 };
                 return resource;
+        }
+        
+        public static dynamic DishToResource(this Dish dish) {
+            var resource = dish.ToDynamic();
+            resource._links = new {
+                self = new {
+                    href = $"/api/dishes/{dish.Code}"
+                },
+                orderItems = new {
+                    href = $"/api/order-items?dishCode={dish.Code}"
+                }
+            };
+            return resource;
+        }
+        
+        public static dynamic OrderItemsToResource(this Order order) {
+            var resource = order.ToDynamic();
+            resource._links = new {
+                self = new {
+                    href = $"/api/orders/{order.Code}"
+                },
+                client = new {
+                    href = $"/api/clients/{order.ClientCode}"
+                },
+                orderItems = new {
+                    href = $"/api/order-items/{order.Code}"
+                }
+            };
+            return resource;
+        }
+        
+        public static dynamic ClientToResource(this Order order) {
+            var resource = order.ToDynamic();
+            resource._links = new {
+                self = new {
+                    href = $"/api/orders/{order.Code}"
+                },
+                client = new {
+                    href = $"/api/clients/{order.ClientCode}"
+                },
+                orderItems = new {
+                    href = $"/api/order-items/{order.Code}"
+                }
+            };
+            return resource;
         }
 
         public static dynamic ToDynamic(this object value) {
