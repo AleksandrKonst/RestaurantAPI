@@ -25,7 +25,7 @@ public class ClientsController : ControllerBase
     {
         var items = _db.ListClients().Skip(index).Take(count)
             .Select(v => v.ClientToResource());
-        var total = _db.CountDishes();
+        var total = _db.CountClients();
         var _links = Hal.PaginateAsDynamic("/api/clients", index, count, total);
         var result = new
         {
