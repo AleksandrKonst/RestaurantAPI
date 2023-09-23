@@ -39,7 +39,7 @@ public class OrderQuery : ObjectGraphType
     }
 
     private IEnumerable<Order> GetOrdersByClient(IResolveFieldContext<object> context) {
-        var clientCode = context.GetArgument<string>("clientCode");
+        var clientCode = context.GetArgument<string>("client");
         var orders = _db.ListOrders().Where(o => o.ClientCode == clientCode);
         return orders;
     }
