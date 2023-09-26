@@ -41,5 +41,60 @@ public class OrderMutation: ObjectGraphType
                 return order;
             }
         );
+        
+        Field<OrderGraphType>(
+            "createClient",
+            arguments: new QueryArguments(
+                new QueryArgument<NonNullGraphType<StringGraphType>> { Name = "code"},
+                new QueryArgument<NonNullGraphType<StringGraphType>> { Name = "name"},
+                new QueryArgument<NonNullGraphType<StringGraphType>> { Name = "number"}
+            ),
+            resolve: context =>
+            {
+                var code = context.GetArgument<string>("code");
+                var name = context.GetArgument<string>("name");
+                var number = context.GetArgument<string>("number");
+                
+                var orders = db.FindOrderByClient(code);
+                var client = new Client
+                {
+                    Code = code,
+                    Name = name,
+                    Number = number,
+                    Orders = orders.ToList(),
+                };
+                _db.CreateClient(client);
+                return client;
+            }
+        );
+        
+        Field<OrderGraphType>(
+            "createDish",
+            arguments: new QueryArguments(
+                new QueryArgument<NonNullGraphType<StringGraphType>> { Name = "code"},
+                new QueryArgument<NonNullGraphType<StringGraphType>> { Name = "name"},
+                new QueryArgument<NonNullGraphType<StringGraphType>> { Name = "diameter"},
+                new QueryArgument<NonNullGraphType<StringGraphType>> { Name = "detaills"}
+            ),
+            resolve: context =>
+            {
+                var code = context.GetArgument<string>("code");
+                var name = context.GetArgument<string>("name");
+                var diameter = context.GetArgument<int>("diameter");
+                var detaills = context.GetArgument<string>("detaills");
+
+                var orderItems = db.FindOrderItemsByDish(code);
+                var dish = new Dish
+                {
+                    Code = code,
+                    Name = name,
+                    Diameter = diameter,
+                    Detaills = detaills,
+                    OrderItems = orderItems.ToList()
+                };
+                _db.CreateDish(dish);
+                return dish;
+            }
+        );
     }
 }
