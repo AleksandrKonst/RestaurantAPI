@@ -43,6 +43,22 @@ public class OrderMutation: ObjectGraphType
         );
         
         Field<OrderGraphType>(
+            "deleteOrder",
+            arguments: new QueryArguments(
+                new QueryArgument<NonNullGraphType<StringGraphType>> { Name = "code"}
+            ),
+            resolve: context =>
+            {
+                var code = context.GetArgument<string>("code");
+               
+                var order = _db.FindOrder(code);
+                if (order == default) return null;
+                _db.DeleteOrder(order);
+                return order;
+            }
+        );
+        
+        Field<ClientGraphType>(
             "createClient",
             arguments: new QueryArguments(
                 new QueryArgument<NonNullGraphType<StringGraphType>> { Name = "code"},
@@ -68,12 +84,28 @@ public class OrderMutation: ObjectGraphType
             }
         );
         
-        Field<OrderGraphType>(
+        Field<ClientGraphType>(
+            "deleteClient",
+            arguments: new QueryArguments(
+                new QueryArgument<NonNullGraphType<StringGraphType>> { Name = "code"}
+            ),
+            resolve: context =>
+            {
+                var code = context.GetArgument<string>("code");
+               
+                var client = _db.FindClient(code);
+                if (client == default) return null;
+                _db.DeleteClient(client);
+                return client;
+            }
+        );
+        
+        Field<DishGraphType>(
             "createDish",
             arguments: new QueryArguments(
                 new QueryArgument<NonNullGraphType<StringGraphType>> { Name = "code"},
                 new QueryArgument<NonNullGraphType<StringGraphType>> { Name = "name"},
-                new QueryArgument<NonNullGraphType<StringGraphType>> { Name = "diameter"},
+                new QueryArgument<NonNullGraphType<IntGraphType>> { Name = "diameter"},
                 new QueryArgument<NonNullGraphType<StringGraphType>> { Name = "detaills"}
             ),
             resolve: context =>
@@ -93,6 +125,22 @@ public class OrderMutation: ObjectGraphType
                     OrderItems = orderItems.ToList()
                 };
                 _db.CreateDish(dish);
+                return dish;
+            }
+        );
+        
+        Field<DishGraphType>(
+            "deleteDish",
+            arguments: new QueryArguments(
+                new QueryArgument<NonNullGraphType<StringGraphType>> { Name = "code"}
+            ),
+            resolve: context =>
+            {
+                var code = context.GetArgument<string>("code");
+               
+                var dish = _db.FindDish(code);
+                if (dish == default) return null;
+                _db.DeleteDish(dish);
                 return dish;
             }
         );
