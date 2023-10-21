@@ -1,3 +1,4 @@
+using EasyNetQ;
 using GraphQL.Server;
 using GraphQL.Types;
 using RestaurantAPI.Data;
@@ -13,6 +14,9 @@ builder.Services.AddSingleton<IRestaurantStorage, RestaurantStorage>();
 
 builder.Services.AddScoped<ISchema, RestaurantSchema>();
 builder.Services.AddGraphQL(options => { options.EnableMetrics = true; }).AddSystemTextJson();
+
+var bus = RabbitHutch.CreateBus(builder.Configuration.GetConnectionString("RestaurantRabbitMQ"));
+builder.Services.AddSingleton<IBus>(bus);
 
 var app = builder.Build();
 

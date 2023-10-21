@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using EasyNetQ;
+using Microsoft.AspNetCore.Mvc;
 using RestaurantAPI.Data;
 using RestaurantAPI.Data.DTO;
 using RestaurantAPI.HAL;
@@ -11,10 +12,12 @@ namespace RestaurantAPI.Controllers.RESTful;
 public class ClientsController : ControllerBase
 {
     private readonly IRestaurantStorage _db;
+    private readonly IBus _bus;
 
-    public ClientsController(IRestaurantStorage db)
+    public ClientsController(IRestaurantStorage db, IBus bus)
     {
         this._db = db;
+        this._bus = bus;
     }
 
     const int PAGE_SIZE = 5;
@@ -99,6 +102,7 @@ public class ClientsController : ControllerBase
             Orders = orders.ToList()
         };
         _db.CreateClient(client);
+        await PublishNewClientMessage(client);
         return Created($"/api/clients/{client.Code}", client.ClientToResource());
     }
     
@@ -109,5 +113,10 @@ public class ClientsController : ControllerBase
         if (client == default) return NotFound();
         _db.DeleteClient(client);
         return NoContent();
+    }
+    
+    private async Task PublishNewClientMessage(Client client) {
+        var message = client.ToMessage();
+        await _bus.PubSub.PublishAsync(message);
     }
 }

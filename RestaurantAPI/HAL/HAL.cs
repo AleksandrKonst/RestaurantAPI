@@ -1,6 +1,7 @@
 using System.ComponentModel;
 using System.Dynamic;
 using RestaurantAPI.Models;
+using RestaurantMS;
 
 namespace RestaurantAPI.HAL;
 
@@ -86,6 +87,16 @@ public static class Hal
                 result.Add(prop.Name, prop.GetValue(value));
             }
             return result;
+        }
+        
+        public static NewClientMessage ToMessage(this Client client) {
+            var message = new NewClientMessage() {
+                Code = client.Code,
+                Name = client.Name,
+                Number = client.Number,
+                CreatedAt = DateTimeOffset.UtcNow,
+            };
+            return message;
         }
 
         private static bool Ignore(PropertyDescriptor prop) {
