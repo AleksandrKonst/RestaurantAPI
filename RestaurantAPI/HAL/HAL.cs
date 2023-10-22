@@ -1,7 +1,7 @@
 using System.ComponentModel;
 using System.Dynamic;
+using Restaurant.Messages;
 using RestaurantAPI.Models;
-using RestaurantMS;
 
 namespace RestaurantAPI.HAL;
 

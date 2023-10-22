@@ -4,6 +4,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RestaurantAPI", "Restaurant
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Restaurant.AuditLogger", "Restaurant.AuditLogger\Restaurant.AuditLogger.csproj", "{5330D4F0-F067-4083-A744-DAA75FB69BFB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Restaurant.Messages", "Restaurant.Messages\Restaurant.Messages.csproj", "{D897C51A-868D-4059-9D7D-83660EAF943C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +20,9 @@ Global
 		{5330D4F0-F067-4083-A744-DAA75FB69BFB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5330D4F0-F067-4083-A744-DAA75FB69BFB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5330D4F0-F067-4083-A744-DAA75FB69BFB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D897C51A-868D-4059-9D7D-83660EAF943C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D897C51A-868D-4059-9D7D-83660EAF943C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D897C51A-868D-4059-9D7D-83660EAF943C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D897C51A-868D-4059-9D7D-83660EAF943C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

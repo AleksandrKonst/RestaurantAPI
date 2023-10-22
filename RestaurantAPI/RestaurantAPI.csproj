@@ -7,7 +7,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="EasyNetQ" Version="8.0.0-beta94" />
+        <PackageReference Include="EasyNetQ" Version="6.3.1" />
         <PackageReference Include="GraphQL" Version="4.7.1" />
         <PackageReference Include="GraphQL.MicrosoftDI" Version="4.7.1" />
         <PackageReference Include="GraphQL.Server.Transports.AspNetCore.SystemTextJson" Version="5.2.0" />
@@ -15,6 +15,10 @@
         <PackageReference Include="GraphQL.SystemTextJson" Version="4.7.1" />
         <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.7" />
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Restaurant.Messages\Restaurant.Messages.csproj" />
     </ItemGroup>
 
 </Project>

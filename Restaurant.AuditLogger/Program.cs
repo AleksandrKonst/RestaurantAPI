@@ -1,4 +1,5 @@
-﻿using EasyNetQ;
+﻿using Restaurant.Messages;
+using EasyNetQ;
 using Microsoft.Extensions.Configuration;
 
 namespace Restaurant.AuditLogger {
@@ -6,16 +7,16 @@ namespace Restaurant.AuditLogger {
         private static readonly IConfigurationRoot config = ReadConfiguration();
 
         static async Task Main(string[] args) {
-            Console.WriteLine("Starting Restaurant.AuditLogger");
+            Console.WriteLine("Starting Restaurant.AuditLog");
             var amqp = config.GetConnectionString("RestaurantRabbitMQ");
             using var bus = RabbitHutch.CreateBus(amqp);
             Console.WriteLine("Connected to bus! Listening for newClientMessages");
-            var subscriberId = $"Restaurant.AuditLogger@{Environment.MachineName}";
-            await bus.PubSub.SubscribeAsync<NewClientMessage>(subscriberId, HandleNewClientMessage);
+            var subscriberId = $"Restaurant.AuditLog@{Environment.MachineName}";
+            await bus.PubSub.SubscribeAsync<NewClientMessage>(subscriberId, HandleNewVehicleMessage);
             Console.ReadLine();
         }
 
-        private static void HandleNewClientMessage(NewClientMessage nvm) {
+        private static void HandleNewVehicleMessage(NewClientMessage nvm) {
             var csvRow =
                 $"{nvm.Code},{nvm.Name},{nvm.Number},{nvm.CreatedAt:O}";
             Console.WriteLine(csvRow);
