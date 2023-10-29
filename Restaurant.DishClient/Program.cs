@@ -13,5 +13,5 @@ while (true) {
         Detaills = "моцарелла фирменный соус альфредо"
     };
     var reply = grpcClient.GetDish(request);
-    Console.WriteLine($"Price: {reply.Message}");
+    Console.WriteLine($"{reply.Message}");
 }
