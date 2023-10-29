@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+option csharp_namespace = "Restaurant.DishServer";
+
+package dish;
+
+service Disher {
+  rpc GetDish (DishRequest) returns (DishReply);
+}
+
+message DishRequest {
+  string Code = 1;
+  string Name = 2;
+  int32 Diameter = 3;
+  string Detaills = 4;
+}
+
+message DishReply {
+  string message = 1;
+}

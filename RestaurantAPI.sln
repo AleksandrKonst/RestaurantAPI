@@ -6,6 +6,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Restaurant.AuditLogger", "R
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Restaurant.Messages", "Restaurant.Messages\Restaurant.Messages.csproj", "{D897C51A-868D-4059-9D7D-83660EAF943C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Restaurant.DishServer", "Restaurant.DishServer\Restaurant.DishServer.csproj", "{B6F803C2-D981-4562-B3C2-0A1202BAFF34}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Restaurant.DishClient", "Restaurant.DishClient\Restaurant.DishClient.csproj", "{96F688D1-E01B-49E8-BFA0-209F8A58BC80}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +28,13 @@ Global
 		{D897C51A-868D-4059-9D7D-83660EAF943C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D897C51A-868D-4059-9D7D-83660EAF943C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D897C51A-868D-4059-9D7D-83660EAF943C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B6F803C2-D981-4562-B3C2-0A1202BAFF34}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B6F803C2-D981-4562-B3C2-0A1202BAFF34}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B6F803C2-D981-4562-B3C2-0A1202BAFF34}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B6F803C2-D981-4562-B3C2-0A1202BAFF34}.Release|Any CPU.Build.0 = Release|Any CPU
+		{96F688D1-E01B-49E8-BFA0-209F8A58BC80}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{96F688D1-E01B-49E8-BFA0-209F8A58BC80}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{96F688D1-E01B-49E8-BFA0-209F8A58BC80}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{96F688D1-E01B-49E8-BFA0-209F8A58BC80}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
