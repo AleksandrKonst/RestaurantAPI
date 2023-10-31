@@ -10,4 +10,4 @@ public class ClientGraphType : ObjectGraphType<Client>
         Field(c => c.Name).Description("The name of the client");
         Field(c => c.Number).Description("The telephone number");
     }
-}
+} 

@@ -12,6 +12,6 @@ while (true) {
         Diameter = 35,
         Detaills = "моцарелла фирменный соус альфредо"
     };
-    var reply = grpcClient.GetDish(request);
-    Console.WriteLine($"Price: {reply.Message}");
+    var reply = await grpcClient.GetDishAsync(request);
+    Console.WriteLine($"{reply.Message}");
 }
