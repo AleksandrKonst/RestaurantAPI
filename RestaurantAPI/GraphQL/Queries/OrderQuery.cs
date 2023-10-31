@@ -37,8 +37,7 @@ public class OrderQuery : ObjectGraphType
         Field<DishGraphType>("Dish", "Query to retrieve a specific dish",
             new QueryArguments(MakeNonNullStringArgument("code", "The code of the dish")),
             resolve: GetDish);
-        
-        
+
         Field<ListGraphType<OrderItemsGraphType>>("OrderItems", "Query to retrieve all orderItems",
             resolve: GetAllOrderItems);
 

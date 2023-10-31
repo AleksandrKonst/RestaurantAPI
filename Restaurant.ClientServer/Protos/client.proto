@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+option csharp_namespace = "Restaurant.ClientServer";
+
+package client;
+
+service Clienter {
+  rpc GetClient (ClientRequest) returns (ClientReply);
+}
+
+message ClientRequest {
+  string Code = 1;
+  string Name = 2;
+  string Number = 3;
+}
+
+message ClientReply {
+  bool check = 1;
+}
